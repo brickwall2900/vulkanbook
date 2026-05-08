@@ -591,8 +591,8 @@ public class Surface {
 
 ## Queues
 
-As it was introduced before, the way to submit work to our GPU is by submitting command buffers to queues. These command buffers contain the instructions that will be executed when that job is carried on. An important concept to stress out when examining the instructions for commands, is that this will not be executed immediately, we are just recording the commands. Commands need to to be submitted to a queue to ha ve the chance ofg being executed. Once submitted it is up to the GPU to execute them.
-We will see later on what is the execution order and which synchronization mechanisms ara available.
+As it was introduced before, the way to submit work to our GPU is by submitting command buffers to queues. These command buffers contain the instructions that will be executed when that job is carried on. An important concept to stress out when examining the instructions for commands, is that this will not be executed immediately, we are just recording the commands. Commands need to to be submitted to a queue to have the chance of being executed. Once submitted, it is up to the GPU to execute them.
+We will see later on what is the execution order and which synchronization mechanisms are available.
 
 ![UML Diagram](rc03-yuml-04.svg)
 
