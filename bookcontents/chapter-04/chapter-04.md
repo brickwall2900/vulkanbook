@@ -75,11 +75,11 @@ public class SwapChain {
 }
 ```
 
-We will be identifying the purpose of the different arguments of the constructor while we go through the code. The first thing we do to calculate the number of images that our swap chain will have bu calling the `calcNumImages` method. You may be wondering why do we need more than one image? The answer is to increase performance, while an image is being presented, we may be using another one to render the results of the next frame. We need to have several in order to parallelize the tasks and use both the CPU and GPU at their maximum capacity. The most common use cases employ two images (double buffering) or three (triple buffering), as in the figure below.
+We will be identifying the purpose of the different arguments of the constructor while we go through the code. The first thing we do to calculate the number of images that our swap chain will have by calling the `calcNumImages` method. You may be wondering why do we need more than one image? The answer is to increase performance. While an image is being presented, we may be using another one to render the results of the next frame. We need to have several in order to parallelize the tasks and use both the CPU and GPU at their maximum capacity. The most common use cases employ two images (double buffering) or three (triple buffering), as in the figure below.
 
 ![Swap chain images](rc04-swapchain.svg)
 
-The figure above represents the triple buffer case. While image #1 is used for presentation we have ready another one, image #2, ready to be presented. In parallel, we are using image #3 for rendering. Triple buffering is commonly used to avoid frame rate dropout, when we cannot guarantee that a frame will be ready between v-syncs (You can read more about this [here](https://github.com/KhronosGroup/Vulkan-Samples/blob/main/samples/performance/swapchain_images/README.adoc)).
+The figure above represents the triple buffer case. While image #1 is used for presentation, we have image #2 ready to be presented. In parallel, we are using image #3 for rendering. Triple buffering is commonly used to avoid frame rate dropout, when we cannot guarantee that a frame will be ready between v-syncs (You can read more about this [here](https://github.com/KhronosGroup/Vulkan-Samples/blob/main/samples/performance/swapchain_images/README.adoc)).
 
 Our `SwapChain` class constructor has a parameter named `requestedImages` which is used to express the desired number of images our swap chain should have. The `calcNumImages` method tries to accommodate that request to the surface limits defined by the surface capabilities that we obtained at the beginning of the constructor. We will see the definition later on.
 
@@ -172,7 +172,7 @@ the swap chain these images have already been created when we created the swap c
 In Vulkan we cannot just use the images, we need an indirect element to access them. This element is called Image View and basically it states how the image will be accessed. Before going on, it is important to precisely define the concepts involved in handling images in Vulkan. In order to have an image that can be accessed by shaders in Vulkan we need:
 
 - A `Buffer` which contains the raw data of the image, its contents. A `Buffer` is just a linear array of data.
-- An `Image` which basically defines the metadata associated to the `Buffer`, yo the raw data. That is, the image format, its dimensions, etc.
+- An `Image` which basically defines the metadata associated to the `Buffer`. That is, the image format, its dimensions, etc.
 - An `Image View`, which specifies how we are going to use an image, which parts of that image can be accessed, which format are we going to use, etc.
 We could have several views over the same `Image` instance to restrict the range or event to use different formats while using it, making automatic conversions to the
 `Image` format. As its name says, it is just a view over the image.
@@ -331,6 +331,10 @@ public class ImageView {
     public long getVkImageView() {
         return vkImageView;
     }
+
+	public long getVkImage() {
+        return vkImage;
+    }
     ...
 }
 ```
@@ -344,10 +348,6 @@ public class SwapChain {
         swapChainExtent.free();
         Arrays.asList(imageViews).forEach(i -> i.cleanup(device));
         KHRSwapchain.vkDestroySwapchainKHR(device.getVkDevice(), vkSwapChain, null);
-    }
-
-    public long getVkImage() {
-        return vkImage;
     }
 
     public ImageView getImageView(int pos) {
