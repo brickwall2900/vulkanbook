@@ -152,12 +152,12 @@ While we are developing, it is good advice to turn these validation layers on, t
 This can be turned off when our application is ready for delivery.
 
 > [!NOTE]
-> to use validation layers, you will need to install [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) for your platform,
+> To use validation layers, you will need to install [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) for your platform,
 > please consult the specific instructions for your platform. In fact, if you install Vulkan SDK you can use Vulkan Configurator to configure any validation layer
 > you want without modifying source code.
 
 > [!WARNING]  
-> **macOS** To enable validation layers on macOS, after installing the Vulkan SDK, you will need to configure LWJGL to use the Vulkan Loader.  
+> **macOS**: To enable validation layers on macOS, after installing the Vulkan SDK, you will need to configure LWJGL to use the Vulkan Loader.  
 > This can be done be setting the following VM parameters: ```-Dorg.lwjgl.librarypath=/usr/local/lib -Dorg.lwjgl.vulkan.libname=libvulkan.1.dylib```  
 > Details about MoltenVK and Vulkan Loader on macOS are [here](https://vulkan.lunarg.com/doc/view/1.3.261.1/mac/getting_started.html#moltenvk)
 
@@ -470,9 +470,11 @@ To do so, we need to set up yet another structure: `VkInstanceCreateInfo`, which
 
 With that structure, we invoke the `vkCreateInstance` function, and we will get a pointer to the Vulkan instance.
 We store that address as a long attribute named `vkInstance`.
-If we have enabled the portability extension, we need to set the `VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR` fla.
+If we have enabled the portability extension, we need to set the `VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR` flag.
 
 ```java
+import static org.lwjgl.vulkan.KHRPortabilityEnumeration.VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+
 public class Instance {
     ...
     public Instance(boolean validate) {
@@ -485,7 +487,7 @@ public class Instance {
                     .ppEnabledLayerNames(requiredLayers)
                     .ppEnabledExtensionNames(requiredExtensions);
             if (usePortability) {
-                instanceInfo.flags(0x00000001); // VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR
+                instanceInfo.flags(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR);
             }
 
             PointerBuffer pInstance = stack.mallocPointer(1);
