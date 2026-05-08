@@ -11,6 +11,7 @@ import java.util.*;
 
 import static org.lwjgl.vulkan.EXTDebugUtils.*;
 import static org.lwjgl.vulkan.VK13.*;
+import static org.lwjgl.vulkan.KHRPortabilityEnumeration.VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 import static org.vulkanb.eng.graph.vk.VkUtils.vkCheck;
 
 public class Instance {
@@ -100,7 +101,7 @@ public class Instance {
                     .ppEnabledLayerNames(requiredLayers)
                     .ppEnabledExtensionNames(requiredExtensions);
             if (usePortability) {
-                instanceInfo.flags(0x00000001); // VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR
+                instanceInfo.flags(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR);
             }
 
             PointerBuffer pInstance = stack.mallocPointer(1);
