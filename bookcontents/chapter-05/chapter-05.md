@@ -383,7 +383,7 @@ public class VkUtils {
 There is an excellent resource [here](https://docs.vulkan.org/tutorial/latest/03_Drawing_a_triangle/03_Drawing/03_Frames_in_flight.html)
 which provides additional information.
 
-So then just create as many semaphores and fences as frames in flight an that's all, right? Again, its not so easy! We need to take care with swap chain image presentation.
+So then just create as many semaphores and fences as frames in flight an that's all, right? Again, it's not so easy! We need to take care with swap chain image presentation.
 We will use a semaphore when submitting the work to a queue to be signaled after all the work has been done. We will use an array of semaphores for that, called
 `renderCompleteSemphs`. When presenting the acquired swap chain image we will use the proper index `renderCompleteSemphs[i]` when calling the `vkQueuePresentKHR` function
 so presentation cannot start until render work has been finished. The issue here is that this will be an asynchronous call that can be processed later on. Imagine that we created as the `renderCompleteSemphs` array is size to contain as many instances as flights in frame, let's say `2` and we will have `3` swap chain images.
