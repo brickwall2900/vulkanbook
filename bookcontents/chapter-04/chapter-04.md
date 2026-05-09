@@ -377,6 +377,10 @@ public class VkCtx {
         ...
     }
 
+	public SwapChain getSwapChain() {
+		return swapChain;
+	}
+
     public void cleanup() {
         swapChain.cleanup(device);
         ...
