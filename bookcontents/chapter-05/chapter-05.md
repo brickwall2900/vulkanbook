@@ -475,7 +475,7 @@ We will need:
 - Synchronization instances, semaphores and fences, as well, as many as frames in flight with the exception of the semaphores that will be signaled when the render process
 is completed. 
 - One `Queue.GraphicsQueue` since we can use them in multiple frames. Synchronization be controlled by fences and semaphores.
-- You will see to new classes that have not been defined yet: `Queue.PresentQueue` (which will be used to present swap chain images)
+- You will see two new classes that have not been defined yet: `Queue.PresentQueue` (which will be used to present swap chain images)
 and `ScnRender` (to actually render a scene). We will see their definition later on.
 - The attribute `currentFrame` will hold the current frame to be processed. It will be updated in each render loop.
 
