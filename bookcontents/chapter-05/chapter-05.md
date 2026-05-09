@@ -708,12 +708,12 @@ public class Queue {
 
 ## Dynamic Rendering
 
-In this book we will use Vulkan dynamic rendering vs the traditional approach based on render passes. Dynamic render provides a simpler API win which we just refer
+In this book we will use Vulkan dynamic rendering vs the traditional approach based on render passes. Dynamic render provides a simpler API in which we just refer
 to the attachments (the images) that we want to render to vs having to specify them upfront through render passes and frame buffers. The result is fewer code and
 reduced setup steps. Dynamic render provides more flexibility and we can change the target attachments at runtime without recreating the associated elements
 (render passes and frame buffers). However, for certain tasks it is a little bit more explicit than the traditional approach. For example, with render passes
 you get some implicit image transitions (which basically prepared images from undefined layouts to the proper render one). Dynamic render requires us to explicitly
-define layout transitions and synchronization, which requires a little bit m ore of code, but is not so dramatic. In addition, I personally find more clear
+define layout transitions and synchronization, which requires a little bit more of code, but is not so dramatic. In addition, I personally find more clear
 the dynamic render approach, where everything is explicit and you do not have to guess what automatic transition or locking is applied.
 
 We will explain how to use dynamic rendering while we define the `ScnRender` class. Let's start by reviewing the constructor:
